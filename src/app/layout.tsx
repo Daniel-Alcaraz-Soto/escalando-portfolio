@@ -1,15 +1,19 @@
 import "@/once-ui/styles/index.scss";
 import "@/once-ui/tokens/index.scss";
-
 import classNames from "classnames";
+import dynamic from "next/dynamic";
 
-import { Footer, Header, RouteGuard } from "@/components";
+// 👇 Importa tu wrapper como componente dinámico (client-side only)
+const GuardWrapper = dynamic(() => import("@/components/GuardWrapper").then(mod => mod.GuardWrapper), {
+  ssr: false,
+});
+
 import { baseURL, effects, style } from "@/app/resources";
+import { Footer, Header } from "@/components";
 
-import { Inter } from "next/font/google";
-import { Source_Code_Pro } from "next/font/google";
+import { Inter, Source_Code_Pro } from "next/font/google";
 
-import { person, home } from "@/app/resources/content";
+import { home, person } from "@/app/resources/content";
 import { Background, Column, Flex, ToastProvider } from "@/once-ui/components";
 
 export async function generateMetadata() {
@@ -151,7 +155,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             flex={1}
           >
             <Flex horizontal="center" fillWidth minHeight="0">
-              <RouteGuard>{children}</RouteGuard>
+            <GuardWrapper>{children}</GuardWrapper>
             </Flex>
           </Flex>
           <Footer />

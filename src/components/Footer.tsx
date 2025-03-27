@@ -1,5 +1,5 @@
-import { Flex, IconButton, SmartLink, Text } from "@/once-ui/components";
 import { person, social } from "@/app/resources/content";
+import { Flex, IconButton, SmartLink, Text } from "@/once-ui/components";
 import styles from "./Footer.module.scss";
 
 export const Footer = () => {
@@ -31,9 +31,9 @@ export const Footer = () => {
             / Build your portfolio with{" "}
             <SmartLink
               style={{ marginLeft: "-0.125rem" }}
-              href="https://once-ui.com/templates/magic-portfolio"
+              href="https://www.escalandomarketing.com/"
             >
-              Once UI
+              Escalando Marketing
             </SmartLink>
           </Text>
         </Text>

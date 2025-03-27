@@ -1,3 +1,7 @@
+import { baseURL } from "@/app/resources";
+import { about, person, social } from "@/app/resources/content";
+import TableOfContents from "@/components/about/TableOfContents";
+import styles from "@/components/about/about.module.scss";
 import {
   Avatar,
   Button,
@@ -10,10 +14,6 @@ import {
   Tag,
   Text,
 } from "@/once-ui/components";
-import { baseURL } from "@/app/resources";
-import TableOfContents from "@/components/about/TableOfContents";
-import styles from "@/components/about/about.module.scss";
-import { person, about, social } from "@/app/resources/content";
 
 export async function generateMetadata() {
   const title = about.title;
@@ -52,20 +52,15 @@ export default function About() {
       items: [],
     },
     {
+    title:about.why.title,
+    display: about.why.display,
+    items: [],
+    },
+    {
       title: about.work.title,
       display: about.work.display,
       items: about.work.experiences.map((experience) => experience.company),
-    },
-    {
-      title: about.studies.title,
-      display: about.studies.display,
-      items: about.studies.institutions.map((institution) => institution.name),
-    },
-    {
-      title: about.technical.title,
-      display: about.technical.display,
-      items: about.technical.skills.map((skill) => skill.title),
-    },
+    }
   ];
   return (
     <Column maxWidth="m">
@@ -138,32 +133,7 @@ export default function About() {
             vertical="center"
             marginBottom="32"
           >
-            {about.calendar.display && (
-              <Flex
-                fitWidth
-                border="brand-alpha-medium"
-                className={styles.blockAlign}
-                style={{
-                  backdropFilter: "blur(var(--static-space-1))",
-                }}
-                background="brand-alpha-weak"
-                radius="full"
-                padding="4"
-                gap="8"
-                marginBottom="m"
-                vertical="center"
-              >
-                <Icon paddingLeft="12" name="calendar" onBackground="brand-weak" />
-                <Flex paddingX="8">Schedule a call</Flex>
-                <IconButton
-                  href={about.calendar.link}
-                  data-border="rounded"
-                  variant="secondary"
-                  icon="chevronRight"
-                />
-              </Flex>
-            )}
-            <Heading className={styles.textAlign} variant="display-strong-xl">
+           <Heading className={styles.textAlign} variant="display-strong-xl">
               {person.name}
             </Heading>
             <Text
@@ -202,13 +172,69 @@ export default function About() {
               </Flex>
             )}
           </Column>
+          
 
           {about.intro.display && (
             <Column textVariant="body-default-l" fillWidth gap="m" marginBottom="xl">
               {about.intro.description}
+              {about.calendar.display && (
+              <Flex
+                fitWidth
+                border="brand-alpha-medium"
+                className={styles.blockAlign}
+                style={{
+                  backdropFilter: "blur(var(--static-space-1))",
+                }}
+                background="brand-alpha-weak"
+                radius="full"
+                padding="4"
+                gap="8"
+                marginBottom="m"
+                vertical="center"
+              >
+                <Icon paddingLeft="12" name="calendar" onBackground="brand-weak" />
+                <Flex paddingX="8">Schedule a call</Flex>
+                <IconButton
+                  href={about.calendar.link}
+                  data-border="rounded"
+                  variant="secondary"
+                  icon="chevronRight"
+                />
+              </Flex>
+            )}
             </Column>
           )}
+          {about.why.display && (
+  <Column fillWidth gap="m" marginBottom="xl">
+    <Heading as="h2" id={about.why.title} variant="display-strong-s" marginBottom="s">
+      {about.why.title}
+    </Heading>
+    <Text variant="body-default-l" onBackground="neutral-weak">
+      {about.why.description}
+    </Text>
 
+    <Column gap="40" marginTop="l">
+      {about.why.bullet.map((item, index) => (
+        <Column key={index} gap="12">
+          <Text variant="heading-strong-m">{item.title}</Text>
+          <Column gap="8">
+            {Array.isArray(item.subtitle) ? (
+              item.subtitle.map((line, i) => (
+                <Text key={i} variant="body-default-m" onBackground="neutral-weak">
+                  {line}
+                </Text>
+              ))
+            ) : (
+              <Text variant="body-default-m" onBackground="neutral-weak">
+                {item.subtitle}
+              </Text>
+            )}
+          </Column>
+        </Column>
+      ))}
+    </Column>
+  </Column>
+)}
           {about.work.display && (
             <>
               <Heading as="h2" id={about.work.title} variant="display-strong-s" marginBottom="m">
@@ -239,6 +265,21 @@ export default function About() {
                         </Text>
                       ))}
                     </Column>
+                        <Column as="ul" gap="16">
+                        {experience.featured && experience.featured.length > 0 && (
+                    <Column as="ul" gap="16">
+                      {experience.featured.map((featured: JSX.Element, index: number) => (
+                        <Text
+                          as="li"
+                          variant="body-default-m"
+                          key={`${experience.company}-featured-${index}`}
+                        >
+                          {featured}
+                        </Text>
+                      ))}
+                    </Column>
+                          )}
+                    </Column>
                     {experience.images.length > 0 && (
                       <Flex fillWidth paddingTop="m" paddingLeft="40" wrap>
                         {experience.images.map((image, index) => (
@@ -262,83 +303,27 @@ export default function About() {
                               src={image.src}
                             />
                           </Flex>
-                        ))}
+                        ))}  
                       </Flex>
+                      
                     )}
+                    <Column as="ul" gap="16">
+                    {experience.images[0].link && (
+      <Button
+        href={experience.images[0].link}
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="primary"
+        label="View Live Page"
+      />
+    )}
+    </Column>
                   </Column>
                 ))}
               </Column>
             </>
           )}
 
-          {about.studies.display && (
-            <>
-              <Heading as="h2" id={about.studies.title} variant="display-strong-s" marginBottom="m">
-                {about.studies.title}
-              </Heading>
-              <Column fillWidth gap="l" marginBottom="40">
-                {about.studies.institutions.map((institution, index) => (
-                  <Column key={`${institution.name}-${index}`} fillWidth gap="4">
-                    <Text id={institution.name} variant="heading-strong-l">
-                      {institution.name}
-                    </Text>
-                    <Text variant="heading-default-xs" onBackground="neutral-weak">
-                      {institution.description}
-                    </Text>
-                  </Column>
-                ))}
-              </Column>
-            </>
-          )}
-
-          {about.technical.display && (
-            <>
-              <Heading
-                as="h2"
-                id={about.technical.title}
-                variant="display-strong-s"
-                marginBottom="40"
-              >
-                {about.technical.title}
-              </Heading>
-              <Column fillWidth gap="l">
-                {about.technical.skills.map((skill, index) => (
-                  <Column key={`${skill}-${index}`} fillWidth gap="4">
-                    <Text variant="heading-strong-l">{skill.title}</Text>
-                    <Text variant="body-default-m" onBackground="neutral-weak">
-                      {skill.description}
-                    </Text>
-                    {skill.images && skill.images.length > 0 && (
-                      <Flex fillWidth paddingTop="m" gap="12" wrap>
-                        {skill.images.map((image, index) => (
-                          <Flex
-                            key={index}
-                            border="neutral-medium"
-                            radius="m"
-                            //@ts-ignore
-                            minWidth={image.width}
-                            //@ts-ignore
-                            height={image.height}
-                          >
-                            <SmartImage
-                              enlarge
-                              radius="m"
-                              //@ts-ignore
-                              sizes={image.width.toString()}
-                              //@ts-ignore
-                              alt={image.alt}
-                              //@ts-ignore
-                              src={image.src}
-                            />
-                          </Flex>
-                        ))}
-                      </Flex>
-                    )}
-                  </Column>
-                ))}
-              </Column>
-            </>
-          )}
         </Column>
       </Flex>
     </Column>
