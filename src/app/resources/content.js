@@ -200,7 +200,7 @@ You get enterprise-grade infrastructure without the hassle.
           </>
         ],
         images: [ {
-          src: "/images/alamedas.png",
+          src: "/images/projects/las-alamedas/cover-1.png",
           alt: "Alamedas Landing Mockup",
           link: "https://www.alamedafincasur.com/",
           width: 16,

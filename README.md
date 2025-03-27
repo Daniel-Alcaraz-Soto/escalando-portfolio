@@ -1,8 +1,8 @@
 # **Build your portfolio with Once UI's Magic Portfolio**
 
-View the [demo here](https://demo.magic-portfolio.com).
+View the [demo here](https://escalandomarketing.com).
 
-![Magic Portfolio](public/images/cover.png)
+![Escalando](public/images/escalando.png)
 
 
 # **Getting started**
