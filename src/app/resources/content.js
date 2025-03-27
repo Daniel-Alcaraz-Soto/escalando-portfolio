@@ -169,7 +169,7 @@ You get enterprise-grade infrastructure without the hassle.
           </>,
         ],
         images: [{
-          src: "/images/embryogen-landing.png",
+          src: "/images/embryogen-landing.PNG",
           alt: "Embryogen Landing Mockup",
           link: "https://proyectobebe.embryogen.mx",
           width: 16,
